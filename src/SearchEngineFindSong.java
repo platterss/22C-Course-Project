@@ -5,11 +5,11 @@ import java.io.IOException;
 public class SearchEngineFindSong {
 
     /**
-     * Returns the zero-based line index of the first song whose title
-     * matches songTitle (case-insensitive), or –1 if not found.
+     * Returns the line index of the first song whose title
+     * matches songName (case-insensitive), or –1 if not found.
      */
-    public static int findSong(String songTitle) {
-        String target = songTitle.trim().toLowerCase() + ",";
+    public static int findSong(String songName) {
+        String target = songName.trim().toLowerCase() + ",";
         try (BufferedReader reader = new BufferedReader(new FileReader("Sabrina.txt"))) {
             String line;
             for (int index = 0; (line = reader.readLine()) != null; index++) {
