@@ -36,13 +36,13 @@ public class SearchEngine {
             System.out.println("Enter the song name to add:");
             String songName = scanner.nextLine();
             // Check if the song already exists
-            if (findSong(songName)) {
+            if (findSong(songName) == -1) {
                 System.out.println("Song already exists.");
                 return;
             }
             sb.append(songName).append(",");
 
-            System.out.println("Sond length (00.00):");
+            System.out.println("Song length (00.00):");
             sb.append(scanner.nextLine()).append(",");
 
             System.out.println("Date added (MM/DD/YYYY):");
