@@ -63,7 +63,7 @@ public class SearchEngine {
     public static void removeSong(File file) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the song name to remove:");
-        String songName = scanner.nextLine().trim(); // Trim spaces for accurate comparison
+        String songName = scanner.nextLine().trim();
 
         if (findSong(file, songName) == -1) {
             System.out.println("Song not found");
@@ -78,8 +78,8 @@ public class SearchEngine {
             String currLine;
 
             while ((currLine = reader.readLine()) != null) {
-                String compare = currLine.split(",")[0].trim(); // Trim spaces for accurate comparison
-                if (!compare.equalsIgnoreCase(songName)) { // Case-insensitive comparison
+                String compare = currLine.split(",")[0].trim();
+                if (!compare.equalsIgnoreCase(songName)) {
                     writer.write(currLine + System.lineSeparator());
                 }
             }
