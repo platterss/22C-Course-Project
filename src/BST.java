@@ -16,7 +16,7 @@ public class BST<T> {
 
     private Node root;
 
-    /**** CONSTRUCTORS ****/
+    // **** CONSTRUCTORS **** //
     /**
      * Creates a new BST
      */
@@ -96,7 +96,7 @@ public class BST<T> {
         copyHelper(node.right, cmp);
     }
 
-    /**** ACCESSORS ****/
+    // **** ACCESSORS **** //
     /**
      * Returns the data stored in the root.
      * @precondition !isEmpty()
@@ -253,7 +253,7 @@ public class BST<T> {
         return findMax(node.right);
     }
 
-    /**** MUTATORS ****/
+    // **** MUTATORS **** //
     /**
      * Inserts a new node in the tree.
      * @param data the data to insert
@@ -338,7 +338,7 @@ public class BST<T> {
         return node;
     }
 
-    /**** ADDITONAL OPERATIONS ****/
+    // **** ADDITONAL OPERATIONS **** //
     /**
      * Determines whether the array is sorted.
      * @param array the array to check

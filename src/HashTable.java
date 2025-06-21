@@ -4,7 +4,7 @@ public class HashTable<T> {
     private int numElements;
     private ArrayList<LinkedList<T>> table;
 
-    /**** CONSTRUCTORS ****/
+    // **** CONSTRUCTORS **** //
     /**
      * Creates an empty HashTable
      * @param size the size of the HashTable
@@ -47,7 +47,7 @@ public class HashTable<T> {
         }
     }
 
-    /** Accessors */
+    // **** ACCESSORS **** //
     /**
      * Returns the number of elements in the HashTable
      * @return the number of elements
@@ -143,7 +143,7 @@ public class HashTable<T> {
         return obj.hashCode() % table.size();
     }
 
-    /**** MUTATORS ****/
+    // **** MUTATORS **** //
     /**
      * Adds a new element to the HashTable
      * @param element the element to add
@@ -199,7 +199,7 @@ public class HashTable<T> {
         }
     }
 
-    /**** ADDITIONAL METHODS ****/
+    // **** ADDITIONAL METHODS **** //
     /**
      * Gets the load factor
      * @return the load factor
