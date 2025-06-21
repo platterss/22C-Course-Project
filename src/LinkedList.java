@@ -18,7 +18,7 @@ public class LinkedList<T> {
     private Node last;
     private Node iterator;
 
-    /**** CONSTRUCTORS ****/
+    // **** CONSTRUCTORS **** //
 
     /**
      * Instantiates a new LinkedList with default values
@@ -66,8 +66,7 @@ public class LinkedList<T> {
         }
     }
 
-    /**** ACCESSORS ****/
-
+    // **** ACCESSORS **** //
     /**
      * Returns the value stored in the first node
      * @precondition LinkedList is not empty
@@ -100,7 +99,7 @@ public class LinkedList<T> {
      * Returns the data stored in the iterator node
      * @precondition iterator is not off end
      * @return the data stored in the iterator node
-     * @throw NullPointerException if iterator is off end
+     * @throws NullPointerException if iterator is off end
      */
     public T getIterator() throws NullPointerException {
         if (offEnd()) {
@@ -134,7 +133,7 @@ public class LinkedList<T> {
         return iterator == null;
     }
 
-    /**** MUTATORS ****/
+    // **** MUTATORS **** //
     /**
      * Adds a new element to the beginning
      * @param data the data to insert at the front of the LinkedList
@@ -312,7 +311,7 @@ public class LinkedList<T> {
         iterator = iterator.prev;
     }
 
-    /**** ADDITIONAL OPERATIONS ****/
+    // **** ADDITIONAL OPERATIONS **** //
     /**
      * Returns each element in the LinkedList along with its numerical position from 1 to n
      * @return the numbered linkedList elements as a String
@@ -419,7 +418,7 @@ public class LinkedList<T> {
      * Advances the iterator to the given index
      * @precondition index >= 0, index < length
      * @param index the index to place the iterator
-     * @throw IndexOutOfBoundsException when the index is out of bounds
+     * @throws IndexOutOfBoundsException when the index is out of bounds
      */
     public void advanceIteratorToIndex(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= length) {
