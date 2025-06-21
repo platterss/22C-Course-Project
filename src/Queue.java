@@ -1,9 +1,3 @@
-/**
- * The Queue class definition
- * @author Kenny Do
- * CIS 22C, Lab 5
- * @param <T> the generic data stored in the Queue
- */
 import java.util.NoSuchElementException;
 
 public class Queue<T> {
