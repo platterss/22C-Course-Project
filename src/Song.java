@@ -70,10 +70,10 @@ public class Song {
 
     /**
      * Sets the release date of the Song
-     * @param releaseDate the release date of the Song as a LocalDate object
+     * @param releaseDate the release date of the Song as a String in MM/DD/YYYY format
      */
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = parseReleaseDate(releaseDate);
     }
 
     /**
