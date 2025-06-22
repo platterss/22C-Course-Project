@@ -6,17 +6,17 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class Searchengine<T> {
-   private HashTable<WorldID> wordTable;
+public class SearchEngine<T> {
+   private HashTable<WordID> wordTable;
    private ArrayList<BST<T>> invertedIndex;
    private int nextId;
    
-   /**contructor**/
+   /**constructor**/
    
    /**
     *constructs a new searchEngine, initializing the word table and inverted index
     */
-   public searchEngine() {
+   public SearchEngine() {
       wordTable = new HashTable<>();
       invertedIndex = new ArrayList<>();
       nextId = 0;
@@ -25,15 +25,15 @@ public class Searchengine<T> {
    /**
     * retrieves the wordIDfor the given word, creating and inserting a new one if needed
     * @param word the keyword to index
-    * @return the wordID obj containing the word and its unique id
+    * @return the WordID obj containing the word and its unique id
     */
-   public wordID getWordID(String word) {
-      wordID dummy = new WordID(word, -1);
-      wordID wid = wordTable.search(dummy);
+   public WordID getWordID(String word) {
+      WordID dummy = new WordID(word, -1);
+      WordID wid = wordTable.search(dummy);
       if (wid == null) {
-         wid = new wordID(word, nextId);
+         wid = new WordID(word, nextId);
          wordTable.insert(wid);
-         invertedIndex.add(new BST<>(new TitleComparator()));
+         invertedIndex.add(new BST<>(new TitleComparator<>()));
          nextId++;
       }
       return wid;
@@ -47,7 +47,7 @@ public class Searchengine<T> {
       List<String> words = record.getTextWords();
       for (int i = 0; i < words.size(); i++) {
          String w = words.get(i);
-         wordID wid = getWordID(w);
+         WordID wid = getWordID(w);
          BST<T> bst = invertedIndex.get(wid.getId());
          bst.insert(record);
       }
@@ -59,9 +59,9 @@ public class Searchengine<T> {
     * @return a BST of matching records
     */
    public BST<T> search(String keyword) {
-      wordID wid = wordTable.search(new wordID(keyword, -1));
+      WordID wid = wordTable.search(new WordID(keyword, -1));
       if (wid == null) {
-         return new BST<>(new TitleComparator());
+         return new BST<>(new TitleComparator<>());
       }
       return invertedIndex.get(wid.getId());
    }
