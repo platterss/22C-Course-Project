@@ -17,12 +17,14 @@ public class SearchEngine {
             return;
         }
 
-        System.out.println("Do you wish to add or remove a song? (add/remove)");
+        System.out.println("Do you wish to add or remove a song? (add/remove/modify)");
         String add = scanner.nextLine();
         if (add.equalsIgnoreCase("add")) {
             addSong(file);
         } else if (add.equalsIgnoreCase("remove")) {
             removeSong(file);
+        } else if (add.equalsIgnoreCase("modify")) {
+            modifySong(file);
         } else {
             System.out.println("Invalid option. Please enter 'add' or 'remove'.");
         }
@@ -42,7 +44,7 @@ public class SearchEngine {
             }
             sb.append(songName).append(",");
 
-            System.out.println("Song length (00.00):");
+            System.out.println("Song length (00:00):");
             sb.append(scanner.nextLine()).append(",");
 
             System.out.println("Date added (MM/DD/YYYY):");
@@ -94,6 +96,49 @@ public class SearchEngine {
         } else {
             System.out.println("Error updating the file.");
         }
+    }
+
+
+    public static void removeSong(File file, String songName) {
+        if (findSong(file, songName) == -1) {
+            System.out.println("Song not found");
+            return;
+        }
+
+        File tempFile = new File("Temp.txt");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+
+            String currLine;
+
+            while ((currLine = reader.readLine()) != null) {
+                String compare = currLine.split(",")[0].trim(); // Trim spaces for accurate comparison
+                if (!compare.equalsIgnoreCase(songName)) { // Case-insensitive comparison
+                    writer.write(currLine + System.lineSeparator());
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error found: " + e.getMessage());
+            return;
+        }
+
+        // Delete the original file first, then rename the temp file
+        if (file.delete() && tempFile.renameTo(file)) {
+            System.out.println("Removed song " + songName);
+        } else {
+            System.out.println("Error updating the file.");
+        }
+    }
+
+    public static void modifySong(File file) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the song name to remove:");
+        String songName = scanner.nextLine().trim(); // Trim spaces for accurate comparison
+
+        removeSong(file, songName);
+        System.out.println("Please enter the updated values for the song");
+        addSong(file);
     }
 
     public static int findSong(File file, String songName) {
