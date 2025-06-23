@@ -133,11 +133,11 @@ public class SearchEngine {
 
     public static void modifySong(File file) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the song name to remove:");
+        System.out.println("Enter the song name to modify:");
         String songName = scanner.nextLine().trim(); // Trim spaces for accurate comparison
 
         removeSong(file, songName);
-        System.out.println("Please enter the updated values for the song");
+        System.out.println("\nPlease enter the updated values for the song");
         addSong(file);
     }
 
