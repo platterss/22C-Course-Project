@@ -155,4 +155,17 @@ public class SearchEngine {
         }
         return -1;
     }
+
+    public static void writeFile(BST<Song> songs, String fileName) {
+        File tempFile = new File(fileName);
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+
+            writer.write(songs.inOrderString());
+
+        } catch (IOException e) {
+            System.out.println("Error found: " + e.getMessage());
+            return;
+        }
+    }
 }
