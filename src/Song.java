@@ -1,5 +1,7 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Arrays;
 
 public class Song {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -166,6 +168,16 @@ public class Song {
         } catch (Exception e) {
             throw new IllegalArgumentException("parseReleaseDate(" + date +"): must be a valid date in MM/dd/yyyy.");
         }
+    }
+
+    /**
+    * splits this song's texual fields into a list of words
+    * @return a List of words extracted from name and album
+    */
+    @Override
+    public List<String> getTextWords() {
+        String combined = name + " " + album;
+        return Arrays.asList(combined.split("\\W+");
     }
 
     /**
