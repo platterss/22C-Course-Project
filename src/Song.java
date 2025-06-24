@@ -174,7 +174,6 @@ public class Song implements TextRecord {
     * splits this song's texual fields into a list of words
     * @return a List of words extracted from name and album
     */
-    @Override
     public List<String> getTextWords() {
         String combined = name + " " + album;
         return Arrays.asList(combined.split("\\W+");
