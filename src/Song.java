@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Arrays;
 
-public class Song implements TextRecord {
+public class Song {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
     private String name;
@@ -26,10 +26,10 @@ public class Song implements TextRecord {
 
     /**
      * Creates a new Song with the specified information
-     * @param name the name of the Song
-     * @param length the length in seconds
-     * @param releaseDate the Song's release date
-     * @param album the album of the SOng
+     * @param name             the name of the Song
+     * @param length           the length in seconds
+     * @param releaseDate      the Song's release date
+     * @param album            the album of the SOng
      * @param playsByThousands the number of plays in thousands
      */
     public Song(String name, int length, String releaseDate, String album, int playsByThousands) {
@@ -166,17 +166,17 @@ public class Song implements TextRecord {
         try {
             return LocalDate.parse(date, DATE_FORMATTER);
         } catch (Exception e) {
-            throw new IllegalArgumentException("parseReleaseDate(" + date +"): must be a valid date in MM/dd/yyyy.");
+            throw new IllegalArgumentException("parseReleaseDate(" + date + "): must be a valid date in MM/dd/yyyy.");
         }
     }
 
     /**
-    * splits this song's texual fields into a list of words
-    * @return a List of words extracted from name and album
-    */
+     * Splits this song's text fields into a list of words
+     * @return a List of words extracted from name and album
+     */
     public List<String> getTextWords() {
         String combined = name + " " + album;
-        return Arrays.asList(combined.split("\\W+");
+        return Arrays.asList(combined.split("\\W+"));
     }
 
     /**

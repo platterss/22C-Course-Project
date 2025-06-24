@@ -75,6 +75,5 @@ public class WordID implements Comparable<WordID> {
    public int compareTo(WordID other) {
       return this.word.compareTo(other.word);
    }
-
 }
 
