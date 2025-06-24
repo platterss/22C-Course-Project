@@ -10,6 +10,7 @@ public class SearchEngine<T> {
    private HashTable<WordID> wordTable;
    private ArrayList<BST<T>> invertedIndex;
    private int nextId;
+   private final int DEFAULT_HASH_CAPACITY = 101;
    
    /**constructor**/
    
@@ -17,7 +18,7 @@ public class SearchEngine<T> {
     *constructs a new searchEngine, initializing the word table and inverted index
     */
    public SearchEngine() {
-      wordTable = new HashTable<>();
+      wordTable = new HashTable<>(DEFAULT_HASH_CAPACITY);
       invertedIndex = new ArrayList<>();
       nextId = 0;
    }
@@ -67,3 +68,4 @@ public class SearchEngine<T> {
    }
 
 }
+
