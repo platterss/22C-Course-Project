@@ -27,7 +27,7 @@ public class SearchEngine {
         BST<Song> bst = new BST<>();
         readFile(file, bst);
 
-        System.out.println(bst.inOrderString());
+        System.out.print(bst.inOrderString());
 
 //        System.out.println("Do you wish to add or remove a song? (add/remove/modify)");
 //        String add = scanner.nextLine();
@@ -103,6 +103,8 @@ public class SearchEngine {
         }
     }
 
+    //-------------------------------READ AND WRITE FILE--------------------------------------//
+
     public static void removeSong(File file) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the song name to remove:");
@@ -139,6 +141,22 @@ public class SearchEngine {
         }
     }
 
+
+    public static void writeFile(BST<Song> songs, String fileName) {
+        File tempFile = new File(fileName);
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+
+            writer.write(songs.inOrderString());
+
+        } catch (IOException e) {
+            System.out.println("Error found: " + e.getMessage());
+            return;
+        }
+    }
+
+
+    //------------------------------------------ADD AND REMOVE SONG----------------------------------------------//
 
     public static void removeSong(File file, String songName) {
         if (findSong(file, songName) == -1) {
@@ -197,16 +215,5 @@ public class SearchEngine {
         return -1;
     }
 
-    public static void writeFile(BST<Song> songs, String fileName) {
-        File tempFile = new File(fileName);
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-
-            writer.write(songs.inOrderString());
-
-        } catch (IOException e) {
-            System.out.println("Error found: " + e.getMessage());
-            return;
-        }
-    }
 }

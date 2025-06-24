@@ -30,7 +30,7 @@ public class TextUI {
             } else if(choice.equals("E")) {
                 //Update
             } else if(choice.equals("F")) {
-                //Show statistics
+
             } else {
                 System.out.println("\nInvalid menu option. Please enter A-F or X to exit.\n");
             }

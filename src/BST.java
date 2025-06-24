@@ -418,7 +418,6 @@ public class BST<T> {
         StringBuilder str = new StringBuilder();
 
         inOrderString(root, str);
-        str.append("\n");
 
         return str.toString();
     }
