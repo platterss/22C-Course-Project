@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Arrays;
 
-public class Song {
+public class Song implements TextRecord {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
     private String name;
