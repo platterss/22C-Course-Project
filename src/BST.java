@@ -462,7 +462,7 @@ public class BST<T> {
         }
 
         inOrderString(node.left, inOrder);
-        inOrder.append(node.data).append(" ");
+        inOrder.append(node.data).append("\n");
         inOrderString(node.right, inOrder);
     }
 

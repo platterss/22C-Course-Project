@@ -178,7 +178,7 @@ public class Song {
                 "Album: " + album + "\n" +
                 "Length: " + getLengthString() + "\n" +
                 "Release Date: " + getReleaseDateString() + "\n" +
-                "Plays (thousands): " + playsByThousands;
+                "Plays (thousands): " + playsByThousands + "\n";
     }
 
     /**

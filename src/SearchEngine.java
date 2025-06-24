@@ -1,32 +1,73 @@
 import java.io.*;
 import java.util.Scanner;
+import java.util.Comparator;
+
+class TitleComparator implements Comparator<Song> {
+    @Override
+    public int compare(Song s1, Song s2) {
+        return s1.getName().compareToIgnoreCase(s2.getName());
+    }
+}
 
 public class SearchEngine {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        File file = new File("Sabrina.txt");
-
-        String filename = "Sabrina.txt";
+        String fileName = "Sabrina.txt";
+        File file = new File(fileName);
 
         try {
             if (!file.exists()) {
                 throw new FileNotFoundException();
             }
         } catch (FileNotFoundException error) {
-            System.out.println(filename + " not found.");
+            System.out.println(fileName + " not found.");
             return;
         }
 
-        System.out.println("Do you wish to add or remove a song? (add/remove/modify)");
-        String add = scanner.nextLine();
-        if (add.equalsIgnoreCase("add")) {
-            addSong(file);
-        } else if (add.equalsIgnoreCase("remove")) {
-            removeSong(file);
-        } else if (add.equalsIgnoreCase("modify")) {
-            modifySong(file);
-        } else {
-            System.out.println("Invalid option. Please enter 'add' or 'remove'.");
+        BST<Song> bst = new BST<>();
+        readFile(file, bst);
+
+        System.out.println(bst.inOrderString());
+
+//        System.out.println("Do you wish to add or remove a song? (add/remove/modify)");
+//        String add = scanner.nextLine();
+//        if (add.equalsIgnoreCase("add")) {
+//            addSong(file);
+//        } else if (add.equalsIgnoreCase("remove")) {
+//            removeSong(file);
+//        } else if (add.equalsIgnoreCase("modify")) {
+//            modifySong(file);
+//        } else {
+//            System.out.println("Invalid option. Please enter 'add' or 'remove'.");
+//        }
+    }
+
+    private static void readFile(File file, BST<Song> bst) {
+        Comparator<Song> cmp = new TitleComparator();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+
+                if (parts.length < 5) {
+                    continue;
+                }
+
+                String name = parts[0].trim();
+                String[] length = parts[1].split(":");
+                int minutes = Integer.parseInt(length[0].trim());
+                int seconds = Integer.parseInt(length[1].trim());
+                String releaseDate = parts[2].trim();
+                String album = parts[3].trim();
+                int playsByThousands = Integer.parseInt(parts[4].trim());
+
+                Song song = new Song(name, minutes * 60 + seconds, releaseDate, album, playsByThousands);
+                bst.insert(song, cmp);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
         }
     }
 
