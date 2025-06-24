@@ -42,8 +42,9 @@ public class HashTable<T> {
             return;
         }
 
-        for (T element : array) {
-            add(element);
+        for (int i = 0; i < array.length; i++) {
+           T element = array[i];
+           add(element);
         }
     }
 
