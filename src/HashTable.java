@@ -94,14 +94,16 @@ public class HashTable<T> {
             return null;
         }
 
-        LinkedList<T> list = table.get(hash(element));
+        int bucketIndex = hash(element);
+        LinkedList<T> bucket = table.get(bucketIndex);
 
-        int index = list.find(element);
+        int index = bucket.find(element);
         if (index == -1) {
             return null;
         }
 
-        return element;
+        bucket.advanceIteratorToIndex(index);
+        return bucket.getIterator();
     }
 
     /**
@@ -140,7 +142,7 @@ public class HashTable<T> {
      * @return the object's hash
      */
     private int hash(T obj) {
-        return obj.hashCode() % table.size();
+        return Math.abs(obj.hashCode()) % table.size();
     }
 
     // **** MUTATORS **** //
@@ -182,6 +184,7 @@ public class HashTable<T> {
         int listIndex = list.find(element);
         list.advanceIteratorToIndex(listIndex);
         list.removeIterator();
+        numElements--;
 
         return true;
     }
