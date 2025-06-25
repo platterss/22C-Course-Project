@@ -1,9 +1,4 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class Song {
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-
     private String name;
     private int length;
     private int releaseYear;
