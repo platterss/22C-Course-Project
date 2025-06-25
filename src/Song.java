@@ -170,7 +170,7 @@ public class Song {
                 "Length: " + getLengthString() + "\n" +
                 "Release Date: " + releaseYear + "\n" +
                 "Plays: " + df.format(plays) + "\n" +
-                "Lyrics: " + lyrics;
+                "Lyrics: " + lyrics + "\n";
     }
 
     /**
