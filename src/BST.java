@@ -370,57 +370,6 @@ public class BST<T> {
     }
 
     /**
-     * Creates a String that is a height order
-     * traversal of the data in the tree starting at
-     * the Node with the largest height (the root)
-     * down to Nodes of smallest height - with
-     * Nodes of equal height added from left to right.
-     * @return the level order traversal as a String
-     */
-    public String levelOrderString() {
-        Queue<Node> queue = new Queue<>();
-        StringBuilder stringBuilder = new StringBuilder();
-
-        queue.enqueue(root);
-        levelOrderString(queue, stringBuilder);
-
-        stringBuilder.append("\n");
-        return stringBuilder.toString();
-    }
-
-    /**
-     * Helper method to levelOrderString.
-     * Inserts the data in level order into a String.
-     * @param queue the Queue in which to store the data.
-     * @param heightTraverse a StringBuilder containing the data.
-     */
-    private void levelOrderString(Queue<Node> queue, StringBuilder heightTraverse) {
-        if (!queue.isEmpty()) {
-            Node node = queue.getFront();
-            queue.dequeue();
-            if (node != null) {
-                queue.enqueue(node.left);
-                queue.enqueue(node.right);
-                heightTraverse.append(node.data).append(" ");
-            }
-            levelOrderString(queue, heightTraverse);
-        }
-    }
-
-    /**
-     * Returns a string containing the data in preorder
-     * @return a String of data in preorder
-     */
-    public String preOrderString() {
-        StringBuilder str = new StringBuilder();
-
-        preOrderString(root, str);
-        str.append("\n");
-
-        return str.toString();
-    }
-
-    /**
      * Returns a String containing the data in order
      * @return a String containing the data in order
      */
@@ -430,34 +379,6 @@ public class BST<T> {
         inOrderString(root, str);
 
         return str.toString();
-    }
-
-    /**
-     * Returns a String containing the data in post order
-     * @return a String containing the data in post order
-     */
-    public String postOrderString() {
-        StringBuilder str = new StringBuilder();
-
-        postOrderString(root, str);
-        str.append("\n");
-
-        return str.toString();
-    }
-
-    /**
-     * Helper method to preOrderString method
-     * @param node the current node
-     * @param preOrder a StringBuilder containing the data
-     */
-    private void preOrderString(Node node, StringBuilder preOrder) {
-        if (node == null) {
-            return;
-        }
-
-        preOrder.append(node.data).append(" ");
-        preOrderString(node.left, preOrder);
-        preOrderString(node.right, preOrder);
     }
 
     /**
@@ -473,20 +394,5 @@ public class BST<T> {
         inOrderString(node.left, inOrder);
         inOrder.append(node.data).append("\n");
         inOrderString(node.right, inOrder);
-    }
-
-    /**
-     * Helper method for postOrderString
-     * @param node the current node
-     * @param postOrder a StringBuilder containing the data
-     */
-    private void postOrderString(Node node, StringBuilder postOrder) {
-        if (node == null) {
-            return;
-        }
-
-        postOrderString(node.left, postOrder);
-        postOrderString(node.right, postOrder);
-        postOrder.append(node.data).append(" ");
     }
 }

@@ -106,21 +106,6 @@ public class HashTable<T> {
     }
 
     /**
-     * Counts the number of elements at this index
-     * @param index the index in the table
-     * @precondition 0 <= index < table.size()
-     * @return the count of elements at this index
-     * @throws IndexOutOfBoundsException when the precondition is violated
-     */
-    public int countBucket(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index >= table.size()) {
-            throw new IndexOutOfBoundsException("countBucket(" + index + "): index is out of bounds");
-        }
-
-        return table.get(index).getLength();
-    }
-
-    /**
      * Determines whether a specified element is in the table
      * @param element the element to locate
      * @precondition element != null
@@ -201,53 +186,6 @@ public class HashTable<T> {
     }
 
     // **** ADDITIONAL METHODS **** //
-    /**
-     * Gets the load factor
-     * @return the load factor
-     */
-    public double getLoadFactor() {
-        return (double) numElements / table.size();
-    }
-
-    /**
-     * Returns a bucket's string
-     * @param bucket the index in the table
-     * @precondition 0 <= bucket < table.size()
-     * @return a String of elements, separated by spaces with a new line character at the end
-     * @throws IndexOutOfBoundsException when the bucket is out of bounds
-     */
-    public String bucketToString(int bucket) {
-        if (bucket < 0 || bucket >= table.size()) {
-            throw new IndexOutOfBoundsException("bucketToString(" + bucket + "): bucket is out of bounds");
-        }
-
-        return table.get(bucket).toString();
-    }
-
-    /**
-     * Creates a String of the bucket number and first element at each bucket
-     * @return a string of the bucket number and first element
-     */
-    public String rowToString() {
-        StringBuilder str = new StringBuilder();
-
-        for (int i = 0; i < table.size(); i++) {
-            str.append("Bucket ").append(i).append(": ");
-
-            LinkedList<T> list = table.get(i);
-
-            if (list.getLength() == 0) {
-                str.append("empty");
-            } else {
-                str.append(list.getFirst().toString());
-            }
-
-            str.append("\n");
-        }
-
-        return str.toString();
-    }
-
     /**
      * Returns a string of the HashTable
      * @return a string of the HashTable
