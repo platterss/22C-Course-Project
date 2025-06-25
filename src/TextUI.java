@@ -246,6 +246,10 @@ public class TextUI {
         BST<Song> search = searchEngine.search(keyword);
         if (search.isEmpty()) {
             System.out.println("No songs found with the keyword: " + keyword);
+
+            if (SearchEngine.stopWordsContains(keyword)) {
+                System.out.println("Note: The keyword '" + keyword + "' is a stop word and may not yield results.");
+            }
         } else {
             System.out.println("Songs found with the keyword '" + keyword + "':");
             System.out.print(search.inOrderString());

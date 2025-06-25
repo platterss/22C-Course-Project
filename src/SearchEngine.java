@@ -112,7 +112,7 @@ public class SearchEngine {
      * @param word the word to check
      * @return true if the word is a stop word, false otherwise
      */
-    private static boolean stopWordsContains(String word) {
+    public static boolean stopWordsContains(String word) {
         int left = 0;
         int right = stopWords.size() - 1;
 
