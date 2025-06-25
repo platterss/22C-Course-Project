@@ -158,7 +158,7 @@ public class TextUI {
         String album = input.nextLine();
 
         System.out.print("Enter the number of plays: ");
-        long plays = Long.parseLong(input.nextLine().split(": ")[1].trim().replaceAll(",", ""));
+        long plays = Long.parseLong(input.nextLine().trim().replaceAll(",", ""));
 
         System.out.print("Enter the lyrics in a single line: ");
         String lyrics = input.nextLine();
