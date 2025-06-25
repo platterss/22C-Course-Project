@@ -9,11 +9,13 @@ public class SearchEngine {
     }
 
     public static Song searchName(String songName, BST<Song> bst) {
-        return null;
+        Song temp = new Song(songName);
+        return bst.search(temp, new TitleComparator());
     }
 
     public static Song searchYear(int year, BST<Song> bst) {
-        return null;
+        Song temp = new Song(year);
+        return bst.search(temp, new YearComparator());
     }
 
     public static Song searchLyric(String lyric, BST<Song> bst) {

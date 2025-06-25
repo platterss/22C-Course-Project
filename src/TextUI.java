@@ -9,6 +9,15 @@ class TitleComparator implements Comparator<Song> {
     }
 }
 
+class YearComparator implements Comparator<Song> {
+    @Override
+    public int compare(Song s1, Song s2) {
+        return Integer.compare(s1.getReleaseYear(), s2.getReleaseYear());
+    }
+}
+
+
+
 public class TextUI {
     public static void main(String [] args) throws IOException {
         Scanner input = new Scanner(System.in);

@@ -24,6 +24,15 @@ public class Song {
         this.lyrics = "";
     }
 
+    public Song(int year) {
+        this.name = "N/A";
+        this.length = -1;
+        this.releaseYear = year;
+        this.album = "N/A";
+        this.plays = -1;
+        this.lyrics = "";
+    }
+
     public Song(String name) {
         this.name = name;
         this.length = -1;
