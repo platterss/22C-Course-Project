@@ -315,7 +315,7 @@ public class TextUI {
                 }
                 case "E" -> {
                     System.out.print("Enter the new number of plays: ");
-                    long newPlays = Long.parseLong(input.nextLine());
+                    long newPlays = Long.parseLong(input.nextLine().trim().replaceAll(",", ""));
                     search.setPlays(newPlays);
                 }
                 case "F" -> {
