@@ -32,32 +32,13 @@ public class TextUI {
             }
 
             switch (choice) {
-                case "A" -> {
-                    addSong(bst, input);
-                }
-                case "B" -> {
-                    removeSong(bst, input);
-                }
-                case "C" -> {
-                    //search songs with keyword
-                    // Submenu:
-                    // - Find and display one record using the primary key
-                    // - Find and display records using keywords (your search engine)
-                }
-                case "D" -> {
-                    modifySong(bst, input);
-                }
-                case "E" -> {
-                    // Statistics
-                }
-                case "X" -> {
-                    System.out.println("What file do you wish to write this to?");
-                    String fileName = input.nextLine();
-                    writeFile(bst, fileName);
-                }
-                default -> {
-                    System.out.println("\nInvalid menu option. Please enter A-F or X to exit.\n");
-                }
+                case "A" -> addSong(bst, input);
+                case "B" -> removeSong(bst, input);
+                case "C" -> searchSong(bst, input, searchEngine);
+                case "D" -> modifySong(bst, input);
+                case "E" -> showStatistics(bst);
+                case "X" -> writeFile(bst, input);
+                default -> System.out.println("\nInvalid menu option. Please enter A-F or X to exit.\n");
             }
         }
     }
@@ -90,7 +71,6 @@ public class TextUI {
 
                 int minutes = Integer.parseInt(length.split(":")[0].trim());
                 int seconds = Integer.parseInt(length.split(":")[1].trim());
-
                 int totalLength = minutes * 60 + seconds;
 
                 Song song = new Song(name, totalLength, releaseYear, album, plays, lyrics);
@@ -101,7 +81,10 @@ public class TextUI {
         }
     }
 
-    public static void writeFile(BST<Song> songs, String fileName) {
+    private static void writeFile(BST<Song> songs, Scanner input) {
+        System.out.print("Enter the file name to write to: ");
+        String fileName = input.nextLine().trim();
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             writer.write(songs.inOrderString());
         } catch (IOException e) {
@@ -109,7 +92,7 @@ public class TextUI {
         }
     }
 
-    public static void showChoices() {
+    private static void showChoices() {
         System.out.println();
         System.out.println("Select from one of the following choices:");
         System.out.println("A: Upload a new song");
@@ -165,6 +148,10 @@ public class TextUI {
         }
     }
 
+    private static void searchSong(BST<Song> bst, Scanner input, SearchEngine searchEngine) {
+        System.out.println("IMPLEMENT THIS METHOD");
+    }
+
     private static void modifySong(BST<Song> bst, Scanner input) {
         System.out.print("Enter the song name to modify: ");
         String songName = input.nextLine();
@@ -179,5 +166,9 @@ public class TextUI {
         } else {
             System.out.println("Song not found.");
         }
+    }
+
+    private static void showStatistics(BST<Song> bst) {
+        System.out.println("IMPLEMENT THIS METHOD");
     }
 }
