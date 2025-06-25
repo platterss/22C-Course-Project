@@ -339,6 +339,11 @@ public class BST<T> {
         return node;
     }
 
+    public void rebuild(Comparator<T> cmp) {
+        BST<T> newBST = new BST<>(this, cmp);
+        this.root = newBST.root;
+    }
+
     // **** ADDITONAL OPERATIONS **** //
     /**
      * Determines whether the array is sorted.

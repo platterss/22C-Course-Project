@@ -15,10 +15,21 @@ public class SearchEngine {
             "their", "them", "then", "there", "these", "they", "this", "those", "through", "to", "too",
             "under", "until", "up", "very", "was", "we", "were", "what", "when", "where", "which",
             "while", "who", "whom", "why", "will", "with", "would", "yet", "you", "your", "yours");
-    private final HashTable<WordID> wordIDs;
-    private final ArrayList<BST<Song>> invertedIndex;
+    private HashTable<WordID> wordIDs;
+    private ArrayList<BST<Song>> invertedIndex;
+    private final int tableSize;
 
     public SearchEngine(ArrayList<Song> allSongs, int tableSize) {
+        this.wordIDs = new HashTable<>(tableSize);
+        this.invertedIndex = new ArrayList<>(tableSize);
+        this.tableSize = tableSize;
+
+        for (Song song : allSongs) {
+            indexSong(song);
+        }
+    }
+
+    public void rebuild(ArrayList<Song> allSongs) {
         this.wordIDs = new HashTable<>(tableSize);
         this.invertedIndex = new ArrayList<>(tableSize);
 

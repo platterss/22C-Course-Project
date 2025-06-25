@@ -10,8 +10,15 @@ class TitleComparator implements Comparator<Song> {
     }
 }
 
+class PlayCountComparator implements Comparator<Song> {
+    @Override
+    public int compare(Song s1, Song s2) {
+        return Long.compare(s1.getPlays(), s2.getPlays());
+    }
+}
+
 public class TextUI {
-    public static void main(String [] args) {
+    public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         String dataFileName = "songs.txt";
         ArrayList<Song> songs = readFile(new File(dataFileName));
@@ -38,7 +45,7 @@ public class TextUI {
                 case "A" -> addSong(bst, input);
                 case "B" -> removeSong(bst, input);
                 case "C" -> searchSong(bst, input, searchEngine);
-                case "D" -> modifySong(bst, input);
+                case "D" -> modifySong(bst, input, songs, searchEngine);
                 case "E" -> showStatistics(bst);
                 case "X" -> writeFile(bst, input);
                 default -> System.out.println("\nInvalid menu option. Please enter A-F or X to exit.\n");
@@ -68,8 +75,8 @@ public class TextUI {
                 String album = scanner.nextLine().split(": ")[1].trim();
                 String length = scanner.nextLine().split(": ")[1].trim();
                 int releaseYear = Integer.parseInt(scanner.nextLine().split(": ")[1].trim());
-                long plays = Long.parseLong(scanner.nextLine().split(": ")[1].trim());
-                String lyrics = scanner.nextLine().trim();
+                long plays = Long.parseLong(scanner.nextLine().split(": ")[1].trim().replaceAll(",", ""));
+                String lyrics = scanner.nextLine().split(": ")[1].trim();
 
 
                 int minutes = Integer.parseInt(length.split(":")[0].trim());
@@ -197,23 +204,89 @@ public class TextUI {
         }
     }
 
-    private static void modifySong(BST<Song> bst, Scanner input) {
+    private static void modifySong(BST<Song> bst, Scanner input, ArrayList<Song> songList, SearchEngine searchEngine) {
         System.out.print("Enter the song name to modify: ");
         String songName = input.nextLine();
 
         Song dummySong = new Song(songName);
         Song search = bst.search(dummySong, new TitleComparator());
 
-        if (search != null) {
-            bst.remove(search, new TitleComparator());
-            addSong(bst, input);
-            System.out.println("Song modified successfully.");
-        } else {
-            System.out.println("Song not found.");
+        if (search == null) {
+            System.out.println("Song '" + songName + "' not found.");
+            return;
         }
+
+        System.out.println();
+        System.out.println("Current details of the song:");
+        System.out.println(search);
+        System.out.println();
+
+        System.out.println("What would you like to modify?");
+        System.out.println("A: Name");
+        System.out.println("B: Length");
+        System.out.println("C: Release Year");
+        System.out.println("D: Album");
+        System.out.println("E: Plays");
+        System.out.println("F: Lyrics");
+        System.out.println();
+
+        String choice = "";
+        while (!choice.matches("[A-F]")) {
+            System.out.print("Enter your choice: ");
+            choice = input.nextLine().trim().toUpperCase();
+
+            switch (choice) {
+                case "A" -> {
+                    System.out.print("Enter the new song name: ");
+                    String newName = input.nextLine();
+                    search.setName(newName);
+                }
+                case "B" -> {
+                    System.out.print("Enter the new length in MM:SS format: ");
+                    search.setLength(input.nextLine());
+                }
+                case "C" -> {
+                    System.out.print("Enter the new release year: ");
+                    int newYear = Integer.parseInt(input.nextLine());
+                    search.setReleaseYear(newYear);
+                }
+                case "D" -> {
+                    System.out.print("Enter the new album name: ");
+                    String newAlbum = input.nextLine();
+                    search.setAlbum(newAlbum);
+                }
+                case "E" -> {
+                    System.out.print("Enter the new number of plays: ");
+                    long newPlays = Long.parseLong(input.nextLine());
+                    search.setPlays(newPlays);
+                }
+                case "F" -> {
+                    System.out.print("Enter the new lyrics: ");
+                    String newLyrics = input.nextLine();
+                    search.setLyrics(newLyrics);
+                }
+                default -> System.out.println("Invalid choice. Please enter A-F.");
+            }
+        }
+
+        System.out.println("Song modified successfully.");
+        bst.rebuild(new TitleComparator());
+        searchEngine.rebuild(songList);
     }
 
     private static void showStatistics(BST<Song> bst) {
-        System.out.println("IMPLEMENT THIS METHOD");
+        BST<Song> sortedByPlays = new BST<>(bst, new PlayCountComparator());
+
+        System.out.println("Database Statistics");
+        System.out.println("-------------------");
+
+        System.out.println("Total number of songs: " + bst.getSize());
+        System.out.println();
+
+        System.out.println("Most played song:");
+        System.out.println(sortedByPlays.findMax());
+
+        System.out.println("Least played song:");
+        System.out.println(sortedByPlays.findMin());
     }
 }

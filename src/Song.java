@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 public class Song {
     private String name;
     private int length;
@@ -8,26 +10,9 @@ public class Song {
 
     // **** CONSTRUCTORS **** //
     /**
-     * Creates a new empty Song
+     * Creates a new Song with the specified name
+     * @param name the name of the Song
      */
-    public Song() {
-        this.name = "N/A";
-        this.length = -1;
-        this.releaseYear = -1;
-        this.album = "N/A";
-        this.plays = -1;
-        this.lyrics = "";
-    }
-
-    public Song(int year) {
-        this.name = "N/A";
-        this.length = -1;
-        this.releaseYear = year;
-        this.album = "N/A";
-        this.plays = -1;
-        this.lyrics = "";
-    }
-
     public Song(String name) {
         this.name = name;
         this.length = -1;
@@ -88,7 +73,7 @@ public class Song {
      * Sets the release date of the Song
      * @param releaseYear the release date of the Song as a String in MM/DD/YYYY format
      */
-    public void releaseYear(int releaseYear) {
+    public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
     }
 
@@ -102,9 +87,9 @@ public class Song {
 
     /**
      * Sets the number of plays of the Song
-     * @param plays the number of plays in thousands
+     * @param plays the number of plays
      */
-    public void setPlays(int plays) {
+    public void setPlays(long plays) {
         this.plays = plays;
     }
 
@@ -179,11 +164,13 @@ public class Song {
      */
     @Override
     public String toString() {
+        DecimalFormat df = new DecimalFormat("#,###");
         return name + "\n" +
                 "Album: " + album + "\n" +
                 "Length: " + getLengthString() + "\n" +
                 "Release Date: " + releaseYear + "\n" +
-                "Plays (thousands): " + plays + "\n";
+                "Plays: " + df.format(plays) + "\n" +
+                "Lyrics: " + lyrics;
     }
 
     /**
