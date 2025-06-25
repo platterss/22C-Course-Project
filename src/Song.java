@@ -6,9 +6,10 @@ public class Song {
 
     private String name;
     private int length;
-    private LocalDate releaseDate;
+    private int releaseYear;
     private String album;
-    private int playsByThousands;
+    private long plays;
+    private String lyrics;
 
     // **** CONSTRUCTORS **** //
     /**
@@ -17,33 +18,36 @@ public class Song {
     public Song() {
         this.name = "N/A";
         this.length = -1;
-        this.releaseDate = parseReleaseDate("01/01/0001");
+        this.releaseYear = -1;
         this.album = "N/A";
-        this.playsByThousands = -1;
+        this.plays = -1;
+        this.lyrics = "";
     }
 
     public Song(String name) {
         this.name = name;
         this.length = -1;
-        this.releaseDate = parseReleaseDate("01/01/0001");
+        this.releaseYear = -1;
         this.album = "N/A";
-        this.playsByThousands = -1;
+        this.plays = -1;
+        this.lyrics = "";
     }
 
     /**
      * Creates a new Song with the specified information
      * @param name the name of the Song
      * @param length the length in seconds
-     * @param releaseDate the Song's release date
+     * @param releaseYear the Song's release date
      * @param album the album of the SOng
-     * @param playsByThousands the number of plays in thousands
+     * @param plays the number of plays in thousands
      */
-    public Song(String name, int length, String releaseDate, String album, int playsByThousands) {
+    public Song(String name, int length, int releaseYear, String album, long plays, String lyrics) {
         this.name = name;
         this.length = length;
-        this.releaseDate = parseReleaseDate(releaseDate);
+        this.releaseYear = releaseYear;
         this.album = album;
-        this.playsByThousands = playsByThousands;
+        this.plays = plays;
+        this.lyrics = lyrics;
     }
 
     // **** MUTATORS **** //
@@ -78,10 +82,10 @@ public class Song {
 
     /**
      * Sets the release date of the Song
-     * @param releaseDate the release date of the Song as a String in MM/DD/YYYY format
+     * @param releaseYear the release date of the Song as a String in MM/DD/YYYY format
      */
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = parseReleaseDate(releaseDate);
+    public void releaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
     }
 
     /**
@@ -94,10 +98,18 @@ public class Song {
 
     /**
      * Sets the number of plays of the Song
-     * @param playsByThousands the number of plays in thousands
+     * @param plays the number of plays in thousands
      */
-    public void setPlaysByThousands(int playsByThousands) {
-        this.playsByThousands = playsByThousands;
+    public void setPlays(int plays) {
+        this.plays = plays;
+    }
+
+    /**
+     * Sets the lyrics of the Song
+     * @param lyrics the lyrics of the Song
+     */
+    public void setLyrics(String lyrics) {
+        this.lyrics = lyrics;
     }
 
     // **** ACCESSORS **** //
@@ -126,19 +138,11 @@ public class Song {
     }
 
     /**
-     * Returns the release date of the Song as a LocalDate object
-     * @return the release date of the Song as a LocalDate object
+     * Returns the release year of the Song
+     * @return the release year of the Song
      */
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    /**
-     * Returns the release date of the Song as a String
-     * @return the release date of the Song as a String
-     */
-    public String getReleaseDateString() {
-        return releaseDate.format(DATE_FORMATTER);
+    public int getReleaseYear() {
+        return releaseYear;
     }
 
     /**
@@ -150,11 +154,19 @@ public class Song {
     }
 
     /**
-     * Returns the number of plays of the Song in thousands
-     * @return the number of plays of the Song in thousands
+     * Returns the number of plays of the Song
+     * @return the number of plays of the Song
      */
-    public int getPlaysByThousands() {
-        return playsByThousands;
+    public long getPlays() {
+        return plays;
+    }
+
+    /**
+     * Returns the lyrics of the Song
+     * @return the lyrics of the Song
+     */
+    public String getLyrics() {
+        return lyrics;
     }
 
     // **** ADDITIONAL METHODS **** //
@@ -185,8 +197,8 @@ public class Song {
         return name + "\n" +
                 "Album: " + album + "\n" +
                 "Length: " + getLengthString() + "\n" +
-                "Release Date: " + getReleaseDateString() + "\n" +
-                "Plays (thousands): " + playsByThousands + "\n";
+                "Release Date: " + releaseYear + "\n" +
+                "Plays (thousands): " + plays + "\n";
     }
 
     /**
@@ -208,8 +220,8 @@ public class Song {
 
         return this.name.equals(other.name)
                 && this.length == other.length
-                && this.releaseDate.equals(other.releaseDate)
+                && this.releaseYear == other.releaseYear
                 && this.album.equals(other.album)
-                && this.playsByThousands == other.playsByThousands;
+                && this.plays == other.plays;
     }
 }

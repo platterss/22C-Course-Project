@@ -12,7 +12,7 @@ class TitleComparator implements Comparator<Song> {
 public class TextUI {
     public static void main(String [] args) throws IOException {
         Scanner input = new Scanner(System.in);
-        String dataFileName = "Sabrina.txt";
+        String dataFileName = "songs.txt";
 
         BST<Song> bst = new BST<>();
         readFile(new File(dataFileName), bst);
@@ -84,16 +84,16 @@ public class TextUI {
 
                 String album = scanner.nextLine().split(": ")[1].trim();
                 String length = scanner.nextLine().split(": ")[1].trim();
-                String releaseDate = scanner.nextLine().split(": ")[1].trim();
-                String plays = scanner.nextLine().split(": ")[1].trim();
+                int releaseYear = Integer.parseInt(scanner.nextLine().split(": ")[1].trim());
+                long plays = Long.parseLong(scanner.nextLine().split(": ")[1].trim());
+                String lyrics = scanner.nextLine().trim();
 
                 int minutes = Integer.parseInt(length.split(":")[0].trim());
                 int seconds = Integer.parseInt(length.split(":")[1].trim());
 
                 int totalLength = minutes * 60 + seconds;
-                int playsByThousands = Integer.parseInt(plays.trim());
 
-                Song song = new Song(name, totalLength, releaseDate, album, playsByThousands);
+                Song song = new Song(name, totalLength, releaseYear, album, plays, lyrics);
                 bst.insert(song, cmp);
             }
         } catch (IOException e) {
@@ -101,30 +101,11 @@ public class TextUI {
         }
     }
 
-    private static Song readSong(String[] parts) {
-        String name = parts[0].trim();
-        String[] length = parts[1].split(":");
-        String releaseDate = parts[2].trim();
-        String album = parts[3].trim();
-        int playsByThousands = Integer.parseInt(parts[4].trim());
-
-        int minutes = Integer.parseInt(length[0].trim());
-        int seconds = Integer.parseInt(length[1].trim());
-
-        return new Song(name, minutes * 60 + seconds, releaseDate, album, playsByThousands);
-    }
-
-    // TODO: Complete this method
     public static void writeFile(BST<Song> songs, String fileName) {
-        File tempFile = new File(fileName);
-
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-
             writer.write(songs.inOrderString());
-
         } catch (IOException e) {
             System.out.println("Error found: " + e.getMessage());
-            return;
         }
     }
 
@@ -152,16 +133,19 @@ public class TextUI {
         int seconds = Integer.parseInt(lengthSplit[1]);
         int totalLength = minutes * 60 + seconds;
 
-        System.out.print("Enter the release date (MM/DD/YYYY): ");
-        String releaseDate = input.nextLine();
+        System.out.print("Enter the release year: ");
+        int releaseYear = Integer.parseInt(input.nextLine());
 
         System.out.print("Enter the album name: ");
         String album = input.nextLine();
 
-        System.out.print("Enter the number of plays (in thousands): ");
+        System.out.print("Enter the number of plays: ");
         int plays = Integer.parseInt(input.nextLine()) / 1000;
 
-        Song song = new Song(songName, totalLength, releaseDate, album, plays);
+        System.out.print("Enter the lyrics in a single line: ");
+        String lyrics = input.nextLine();
+
+        Song song = new Song(songName, totalLength, releaseYear, album, plays, lyrics);
 
         bst.insert(song, new TitleComparator());
         System.out.println("Song added successfully.");
