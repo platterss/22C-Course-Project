@@ -114,6 +114,8 @@ public class TextUI {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             writer.write(songBST.inOrderString());
+            System.out.println("Songs written to " + fileName + " successfully.");
+            System.out.println("\nThank you for using the Sabrina Carpenter Database!");
         } catch (IOException e) {
             System.out.println("Error found: " + e.getMessage());
         }
