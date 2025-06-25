@@ -6,6 +6,11 @@ public class WordID implements Comparable<WordID> {
     private final String word;
     private final int id;
 
+    public WordID(String word) {
+        this.word = word;
+        this.id = word.hashCode();
+    }
+
     /**
      * Constructs a new WordID mapping the given word to the specified identifier
      * @param word the word to be indexed

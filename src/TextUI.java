@@ -17,7 +17,6 @@ class YearComparator implements Comparator<Song> {
 }
 
 
-
 public class TextUI {
     public static void main(String [] args) throws IOException {
         Scanner input = new Scanner(System.in);
@@ -77,6 +76,7 @@ public class TextUI {
                 int releaseYear = Integer.parseInt(scanner.nextLine().split(": ")[1].trim());
                 long plays = Long.parseLong(scanner.nextLine().split(": ")[1].trim());
                 String lyrics = scanner.nextLine().trim();
+
 
                 int minutes = Integer.parseInt(length.split(":")[0].trim());
                 int seconds = Integer.parseInt(length.split(":")[1].trim());
