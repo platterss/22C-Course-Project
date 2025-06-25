@@ -178,25 +178,6 @@ public class Song {
         return lyrics;
     }
 
-    // **** ADDITIONAL METHODS **** //
-    /**
-     * Helper to parse a date given as a String
-     * @param date a date given in MM/DD/YYYY
-     * @return a LocalDate representation of the given String
-     * @throws IllegalArgumentException if the String isn't in MM/dd/yyyy format
-     */
-    private static LocalDate parseReleaseDate(String date) throws IllegalArgumentException {
-        if (date == null || date.isEmpty()) {
-            throw new IllegalArgumentException("parseReleaseDate(" + date + "): must be a valid date in MM/dd/yyyy.");
-        }
-
-        try {
-            return LocalDate.parse(date, DATE_FORMATTER);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("parseReleaseDate(" + date + "): must be a valid date in MM/dd/yyyy.");
-        }
-    }
-
     /**
      * Returns a String representation of the given Song
      * @return a String representation of the given Song
