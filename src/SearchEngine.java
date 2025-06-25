@@ -19,6 +19,11 @@ public class SearchEngine {
     private ArrayList<BST<Song>> invertedIndex;
     private final int tableSize;
 
+    /**
+     * Constructs a new SearchEngine object with the given songs and table size.
+     * @param allSongs the list of all songs to index
+     * @param tableSize the size of the hash table for word IDs
+     */
     public SearchEngine(ArrayList<Song> allSongs, int tableSize) {
         this.wordIDs = new HashTable<>(tableSize);
         this.invertedIndex = new ArrayList<>(tableSize);
@@ -29,6 +34,10 @@ public class SearchEngine {
         }
     }
 
+    /**
+     * Rebuilds the search engine's index with a new list of songs
+     * @param allSongs the list of all songs to index
+     */
     public void rebuild(ArrayList<Song> allSongs) {
         this.wordIDs = new HashTable<>(tableSize);
         this.invertedIndex = new ArrayList<>(tableSize);
@@ -38,6 +47,10 @@ public class SearchEngine {
         }
     }
 
+    /**
+     * Indexes a song by tokenizing its lyrics, name, album, and release year
+     * @param song the song to index
+     */
     public void indexSong(Song song) {
         ArrayList<String> tokens = tokenize(song.getLyrics());
         tokens.addAll(tokenize(song.getName()));
@@ -68,6 +81,12 @@ public class SearchEngine {
         }
     }
 
+    /**
+     * Tokenizes the input text by converting it to lowercase, removing non-alphanumeric characters,
+     * and splitting it into words. It also filters out stop words and duplicates
+     * @param text the text to tokenize
+     * @return an ArrayList of unique, non-stop words from the text
+     */
     private ArrayList<String> tokenize(String text) {
         text = text.toLowerCase().replaceAll("[^a-z0-9\\s]", " ");
         String[] words = text.split("\\s+");
@@ -75,7 +94,7 @@ public class SearchEngine {
         ArrayList<String> uniqueWords = new ArrayList<>(words.length);
 
         for (String word : words) {
-            if (word.isEmpty() || stopWords.contains(word)) {
+            if (word.isEmpty() || stopWordsContains(word)) {
                 continue;
             }
 
@@ -88,6 +107,36 @@ public class SearchEngine {
         return uniqueWords;
     }
 
+    /**
+     * Checks if the given word is a stop word using binary search
+     * @param word the word to check
+     * @return true if the word is a stop word, false otherwise
+     */
+    private static boolean stopWordsContains(String word) {
+        int left = 0;
+        int right = stopWords.size() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int cmp = stopWords.get(mid).compareTo(word);
+
+            if (cmp == 0) {
+                return true;
+            } else if (cmp < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Searches for songs that match the given keyword.
+     * @param keyword the keyword to search for
+     * @return a BST containing all songs that match the keyword, or an empty BST if no matches are found
+     */
     public BST<Song> search(String keyword) {
         String cleanedKeyword = keyword.toLowerCase().replaceAll("[^a-z0-9]", "");
         WordID wordID = new WordID(cleanedKeyword);

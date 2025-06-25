@@ -339,12 +339,16 @@ public class BST<T> {
         return node;
     }
 
+    /**
+     * Rebuilds the BST with a new Comparator
+     * @param cmp the Comparator indicating how the data in the tree is organized
+     */
     public void rebuild(Comparator<T> cmp) {
         BST<T> newBST = new BST<>(this, cmp);
         this.root = newBST.root;
     }
 
-    // **** ADDITONAL OPERATIONS **** //
+    // **** ADDITIONAL OPERATIONS **** //
     /**
      * Determines whether the array is sorted.
      * @param array the array to check

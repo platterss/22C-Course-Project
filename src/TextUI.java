@@ -58,6 +58,11 @@ public class TextUI {
         }
     }
 
+    /**
+     * Reads the file containing song data and returns an ArrayList of Song objects
+     * @param file the file to read from
+     * @return an ArrayList of Song objects
+     */
     private static ArrayList<Song> readFile(File file) {
         ArrayList<Song> songs = new ArrayList<>();
 
@@ -98,6 +103,10 @@ public class TextUI {
         return songs;
     }
 
+    /**
+     * Writes the current song list to a file specified by the user
+     * @param input the Scanner object to read user input
+     */
     private static void writeFile(Scanner input) {
         System.out.print("Enter the file name to write to: ");
         String fileName = input.nextLine().trim();
@@ -109,6 +118,9 @@ public class TextUI {
         }
     }
 
+    /**
+     * Displays the menu choices to the user
+     */
     private static void showChoices() {
         System.out.println();
         System.out.println("Select from one of the following choices:");
@@ -121,6 +133,10 @@ public class TextUI {
         System.out.print("Enter your choice: ");
     }
 
+    /**
+     * Adds a new song to the database by prompting the user for details
+     * @param input the Scanner object to read user input
+     */
     private static void addSong(Scanner input) {
         System.out.print("Enter the song name to add: ");
         String songName = input.nextLine();
@@ -149,6 +165,10 @@ public class TextUI {
         System.out.println("Song added successfully.");
     }
 
+    /**
+     * Removes a song from the database by prompting the user for the song name
+     * @param input the Scanner object to read user input
+     */
     private static void removeSong(Scanner input) {
         System.out.print("Enter the song name to remove: ");
         String songName = input.nextLine();
@@ -167,6 +187,10 @@ public class TextUI {
         System.out.println("Song removed successfully.");
     }
 
+    /**
+     * Prompts the user to search for a song by either name or keyword
+     * @param input the Scanner object to read user input
+     */
     private static void searchSong(Scanner input) {
         System.out.println("Would you like to:");
         System.out.println("A: Find and display one song by name");
@@ -186,6 +210,11 @@ public class TextUI {
         }
     }
 
+    /**
+     * Searches for a song by its name and displays the details if found
+     * Helper method for searchSong
+     * @param input the Scanner object to read user input
+     */
     private static void searchBySongName(Scanner input) {
         System.out.print("Enter the song name to search for: ");
         String songName = input.nextLine().trim();
@@ -199,6 +228,11 @@ public class TextUI {
         }
     }
 
+    /**
+     * Searches for songs that contain a keyword in their lyrics, name, or album
+     * Helper method for searchSong
+     * @param input the Scanner object to read user input
+     */
     private static void searchByKeyword(Scanner input) {
         System.out.print("Enter the keyword to search for: ");
         String keyword = input.nextLine().trim();
@@ -213,6 +247,10 @@ public class TextUI {
         }
     }
 
+    /**
+     * Modifies the details of an existing song by prompting the user for changes
+     * @param input the Scanner object to read user input
+     */
     private static void modifySong(Scanner input) {
         System.out.print("Enter the song name to modify: ");
         String songName = input.nextLine();
@@ -283,6 +321,9 @@ public class TextUI {
         searchEngine.rebuild(songList);
     }
 
+    /**
+     * Displays statistics about the song database, including the total number of songs,
+     */
     private static void showStatistics() {
         BST<Song> sortedByPlays = new BST<>(songBST, new PlayCountComparator());
 

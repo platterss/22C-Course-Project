@@ -19,7 +19,6 @@ public class LinkedList<T> {
     private Node iterator;
 
     // **** CONSTRUCTORS **** //
-
     /**
      * Instantiates a new LinkedList with default values
      * @postcondition LinkedList is set up and empty
