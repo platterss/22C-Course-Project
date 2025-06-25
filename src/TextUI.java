@@ -19,7 +19,7 @@ public class TextUI {
 
         SearchEngine searchEngine = new SearchEngine(bst);
 
-        System.out.println("Welcome to the Sabrina Carpenter Database!\n");
+        System.out.println("Welcome to the Sabrina Carpenter Database!");
 
         String choice = "";
         while (!choice.equals("X")) {
@@ -72,18 +72,28 @@ public class TextUI {
             return;
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (Scanner scanner = new Scanner(new FileReader(file))) {
             Comparator<Song> cmp = new TitleComparator();
-            String line;
 
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
+            while (scanner.hasNextLine()) {
+                String name = scanner.nextLine().trim();
 
-                if (parts.length < 5) {
+                if (name.isEmpty()) {
                     continue;
                 }
 
-                Song song = readSong(parts);
+                String album = scanner.nextLine().split(": ")[1].trim();
+                String length = scanner.nextLine().split(": ")[1].trim();
+                String releaseDate = scanner.nextLine().split(": ")[1].trim();
+                String plays = scanner.nextLine().split(": ")[1].trim();
+
+                int minutes = Integer.parseInt(length.split(":")[0].trim());
+                int seconds = Integer.parseInt(length.split(":")[1].trim());
+
+                int totalLength = minutes * 60 + seconds;
+                int playsByThousands = Integer.parseInt(plays.trim());
+
+                Song song = new Song(name, totalLength, releaseDate, album, playsByThousands);
                 bst.insert(song, cmp);
             }
         } catch (IOException e) {
@@ -119,6 +129,7 @@ public class TextUI {
     }
 
     public static void showChoices() {
+        System.out.println();
         System.out.println("Select from one of the following choices:");
         System.out.println("A: Upload a new song");
         System.out.println("B: Remove a song");
@@ -160,7 +171,7 @@ public class TextUI {
         System.out.print("Enter the song name to remove: ");
         String songName = input.nextLine();
 
-        Song dummySong = new Song(songName, 0, "", "", 0);
+        Song dummySong = new Song(songName);
         Song search = bst.search(dummySong, new TitleComparator());
         if (search != null) {
             bst.remove(search, new TitleComparator());
@@ -174,7 +185,7 @@ public class TextUI {
         System.out.print("Enter the song name to modify: ");
         String songName = input.nextLine();
 
-        Song dummySong = new Song(songName, 0, "", "", 0);
+        Song dummySong = new Song(songName);
         Song search = bst.search(dummySong, new TitleComparator());
 
         if (search != null) {

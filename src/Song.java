@@ -22,6 +22,14 @@ public class Song {
         this.playsByThousands = -1;
     }
 
+    public Song(String name) {
+        this.name = name;
+        this.length = -1;
+        this.releaseDate = parseReleaseDate("01/01/0001");
+        this.album = "N/A";
+        this.playsByThousands = -1;
+    }
+
     /**
      * Creates a new Song with the specified information
      * @param name the name of the Song
