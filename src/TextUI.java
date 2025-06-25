@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 class TitleComparator implements Comparator<Song> {
     @Override
@@ -9,23 +10,15 @@ class TitleComparator implements Comparator<Song> {
     }
 }
 
-class YearComparator implements Comparator<Song> {
-    @Override
-    public int compare(Song s1, Song s2) {
-        return Integer.compare(s1.getReleaseYear(), s2.getReleaseYear());
-    }
-}
-
-
 public class TextUI {
-    public static void main(String [] args) throws IOException {
+    public static void main(String [] args) {
         Scanner input = new Scanner(System.in);
         String dataFileName = "songs.txt";
+        ArrayList<Song> songs = readFile(new File(dataFileName));
+        songs.sort(new TitleComparator());
 
-        BST<Song> bst = new BST<>();
-        readFile(new File(dataFileName), bst);
-
-        SearchEngine searchEngine = new SearchEngine(bst);
+        BST<Song> bst = new BST<>(songs, new TitleComparator());
+        SearchEngine searchEngine = new SearchEngine(songs, 2000);
 
         System.out.println("Welcome to the Sabrina Carpenter Database!");
 
@@ -39,6 +32,8 @@ public class TextUI {
                 choice = input.nextLine().trim().toUpperCase();
             }
 
+            System.out.println();
+
             switch (choice) {
                 case "A" -> addSong(bst, input);
                 case "B" -> removeSong(bst, input);
@@ -51,19 +46,18 @@ public class TextUI {
         }
     }
 
-    private static void readFile(File file, BST<Song> bst) {
+    private static ArrayList<Song> readFile(File file) {
+        ArrayList<Song> songs = new ArrayList<>();
+
         try {
             if (!file.exists()) {
                 throw new FileNotFoundException();
             }
         } catch (FileNotFoundException error) {
-            System.out.println(file.getName() + " not found.");
-            return;
+            throw new RuntimeException("File not found: " + file.getName());
         }
 
         try (Scanner scanner = new Scanner(new FileReader(file))) {
-            Comparator<Song> cmp = new TitleComparator();
-
             while (scanner.hasNextLine()) {
                 String name = scanner.nextLine().trim();
 
@@ -83,11 +77,13 @@ public class TextUI {
                 int totalLength = minutes * 60 + seconds;
 
                 Song song = new Song(name, totalLength, releaseYear, album, plays, lyrics);
-                bst.insert(song, cmp);
+                songs.add(song);
             }
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
+
+        return songs;
     }
 
     private static void writeFile(BST<Song> songs, Scanner input) {
@@ -107,8 +103,6 @@ public class TextUI {
         System.out.println("A: Upload a new song");
         System.out.println("B: Remove a song");
         System.out.println("C: Search for a song");
-//        System.out.println("C: Search songs with a keyword");
-//        System.out.println("D: Direct search for one song with key");
         System.out.println("D: Update or modify a song entry");
         System.out.println("E: Show statistics");
         System.out.println("X: Quit program\n");
@@ -158,7 +152,49 @@ public class TextUI {
     }
 
     private static void searchSong(BST<Song> bst, Scanner input, SearchEngine searchEngine) {
-        System.out.println("IMPLEMENT THIS METHOD");
+        System.out.println("Would you like to:");
+        System.out.println("A: Find and display one song by name");
+        System.out.println("B: Find and display all songs that contain a keyword");
+        System.out.println();
+
+        String choice = "";
+        while (!choice.equals("A") && !choice.equals("B")) {
+            System.out.print("Enter your choice: ");
+            choice = input.nextLine().trim().toUpperCase();
+
+            switch (choice) {
+                case "A" -> searchBySongName(bst, input);
+                case "B" -> searchByKeyword(searchEngine, input);
+                default -> System.out.println("Invalid choice. Please enter A or B.");
+            }
+        }
+    }
+
+    private static void searchBySongName(BST<Song> bst, Scanner input) {
+        System.out.print("Enter the song name to search for: ");
+        String songName = input.nextLine().trim();
+        System.out.println();
+
+        Song song = bst.search(new Song(songName), new TitleComparator());
+        if (song != null) {
+            System.out.println("Song found: " + song);
+        } else {
+            System.out.println("Song not found.");
+        }
+    }
+
+    private static void searchByKeyword(SearchEngine searchEngine, Scanner input) {
+        System.out.print("Enter the keyword to search for: ");
+        String keyword = input.nextLine().trim();
+        System.out.println();
+
+        BST<Song> songs = searchEngine.search(keyword);
+        if (songs.isEmpty()) {
+            System.out.println("No songs found with the keyword: " + keyword);
+        } else {
+            System.out.println("Songs found with the keyword '" + keyword + "':");
+            System.out.print(songs.inOrderString());
+        }
     }
 
     private static void modifySong(BST<Song> bst, Scanner input) {

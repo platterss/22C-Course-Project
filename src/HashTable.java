@@ -101,7 +101,8 @@ public class HashTable<T> {
             return null;
         }
 
-        return element;
+        list.advanceIteratorToIndex(index);
+        return list.getIterator();
     }
 
     /**
@@ -140,7 +141,7 @@ public class HashTable<T> {
      * @return the object's hash
      */
     private int hash(T obj) {
-        return obj.hashCode() % table.size();
+        return Math.abs(obj.hashCode()) % table.size();
     }
 
     // **** MUTATORS **** //

@@ -1,12 +1,9 @@
-import java.util.Comparator;
-import java.util.TreeMap;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchEngine {
-    private final BST<Song> bst;
-    private static String[] stopWords = {
-            "a", "about", "across", "after", "all", "almost", "also", "am", "an", "and", "any", "are",
+    private static final List<String> stopWords = Arrays.asList("a", "about", "across", "after", "all", "almost", "also", "am", "an", "and", "any", "are",
             "as", "at", "be", "because", "been", "before", "being", "between", "big", "both", "but", "by",
             "can", "could", "did", "do", "does", "down", "during", "each", "either", "few", "for", "from",
             "further", "good", "great", "had", "has", "have", "he", "her", "here", "him", "himself", "his",
@@ -17,39 +14,78 @@ public class SearchEngine {
             "really", "same", "she", "should", "small", "so", "some", "such", "than", "that", "the",
             "their", "them", "then", "there", "these", "they", "this", "those", "through", "to", "too",
             "under", "until", "up", "very", "was", "we", "were", "what", "when", "where", "which",
-            "while", "who", "whom", "why", "will", "with", "would", "yet", "you", "your", "yours"
-            };
+            "while", "who", "whom", "why", "will", "with", "would", "yet", "you", "your", "yours");
+    private final HashTable<WordID> wordIDs;
+    private final ArrayList<BST<Song>> invertedIndex;
 
-    public SearchEngine(BST<Song> bst) {
-        this.bst = bst;
+    public SearchEngine(ArrayList<Song> allSongs, int tableSize) {
+        this.wordIDs = new HashTable<>(tableSize);
+        this.invertedIndex = new ArrayList<>(tableSize);
+
+        for (Song song : allSongs) {
+            indexSong(song);
+        }
     }
 
-    public static Song searchName(String songName, BST<Song> bst) {
-        Song temp = new Song(songName);
-        return bst.search(temp, new TitleComparator());
+    public void indexSong(Song song) {
+        ArrayList<String> tokens = tokenize(song.getLyrics());
+        tokens.addAll(tokenize(song.getName()));
+        tokens.addAll(tokenize(song.getAlbum()));
+        tokens.add(song.getReleaseYear() + "");
+
+        HashTable<String> seenWords = new HashTable<>(tokens.size());
+
+        for (String word : tokens) {
+            WordID wordID = new WordID(word);
+
+            if (seenWords.contains(word)) {
+                continue;
+            }
+
+            if (!wordIDs.contains(wordID)) {
+                int newID = invertedIndex.size();
+                WordID mapping = new WordID(word, newID);
+                wordIDs.add(mapping);
+                invertedIndex.add(new BST<>());
+            }
+
+            WordID stored = wordIDs.get(wordID);
+            int slot = stored.getId();
+
+            invertedIndex.get(slot).insert(song, new TitleComparator());
+            seenWords.add(word);
+        }
     }
 
-    public static Song searchYear(int year, BST<Song> bst) {
-        Song temp = new Song(year);
-        return bst.search(temp, new YearComparator());
-    }
+    private ArrayList<String> tokenize(String text) {
+        text = text.toLowerCase().replaceAll("[^a-z0-9\\s]", " ");
+        String[] words = text.split("\\s+");
+        HashTable<String> seenWords = new HashTable<>(words.length);
+        ArrayList<String> uniqueWords = new ArrayList<>(words.length);
 
-    public static void appendLyrics(String lyrics) {
-        String[] words = lyrics.split(" ");
-        ArrayList<String> completed = new ArrayList<>(words.length);
-        for (String word: words) {
-            if (Arrays.asList(stopWords).contains(word)) {
-                completed.add(word);
+        for (String word : words) {
+            if (word.isEmpty() || stopWords.contains(word)) {
+                continue;
+            }
+
+            if (!seenWords.contains(word)) {
+                seenWords.add(word);
+                uniqueWords.add(word);
             }
         }
 
+        return uniqueWords;
     }
 
-    public static Song searchLyric(String lyric, BST<Song> bst) {
-        return null;
+    public BST<Song> search(String keyword) {
+        String cleanedKeyword = keyword.toLowerCase().replaceAll("[^a-z0-9]", "");
+        WordID wordID = new WordID(cleanedKeyword);
+
+        if (!wordIDs.contains(wordID)) {
+            return new BST<>();
+        }
+
+        int slot = wordIDs.get(wordID).getId();
+        return invertedIndex.get(slot);
     }
-
-
-
-
 }

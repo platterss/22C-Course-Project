@@ -1,4 +1,5 @@
 import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 public class BST<T> {
@@ -31,7 +32,7 @@ public class BST<T> {
      * @precondition array must be sorted in ascending order
      * @throws IllegalArgumentException when the array is unsorted.
      */
-    public BST(T[] array, Comparator<T> cmp) {
+    public BST(ArrayList<T> array, Comparator<T> cmp) {
         this();
 
         if (array == null) {
@@ -42,7 +43,7 @@ public class BST<T> {
             throw new IllegalArgumentException("BST(T[], Comparator<T>): array is not sorted");
         }
 
-        root = arrayHelper(0, array.length - 1, array);
+        root = arrayHelper(0, array.size() - 1, array);
     }
 
     /**
@@ -52,13 +53,13 @@ public class BST<T> {
      * @param array the array to search
      * @return the newly created Node
      */
-    private Node arrayHelper(int begin, int end, T[] array) {
+    private Node arrayHelper(int begin, int end, ArrayList<T> array) {
         if (begin > end) {
             return null;
         }
 
         int mid = begin + (end - begin) / 2;
-        Node node = new Node(array[mid]);
+        Node node = new Node(array.get(mid));
 
         node.left = arrayHelper(begin, mid - 1, array);
         node.right = arrayHelper(mid + 1, end, array);
@@ -345,13 +346,13 @@ public class BST<T> {
      * @param cmp the Comparator indicating how the data is sorted
      * @return whether the array is sorted.
      */
-    public boolean isSorted(T[] array, Comparator<T> cmp) {
-        if (array == null || array.length < 2) {
+    public boolean isSorted(ArrayList<T> array, Comparator<T> cmp) {
+        if (array == null || array.size() < 2) {
             return true;
         }
 
-        for (int i = 0; i < array.length - 1; i++) {
-            if (cmp.compare(array[i], array[i + 1]) > 0) {
+        for (int i = 0; i < array.size() - 1; i++) {
+            if (cmp.compare(array.get(i), array.get(i + 1)) > 0) {
                 return false;
             }
         }
