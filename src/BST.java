@@ -150,7 +150,7 @@ public class BST<T> {
      * @param data the value to search for.
      * @param node the current node to check.
      * @param cmp the Comparator that indicates the way the data in the tree was ordered/
-     * @return the data stored in that Node of the tree, otherwise null
+     * @return the  data stored in that Node of thetree, otherwise null
      */
     private T search(T data, Node node, Comparator<T> cmp) {
         if (node == null) {

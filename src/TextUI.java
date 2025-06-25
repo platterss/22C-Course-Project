@@ -16,9 +16,9 @@ public class TextUI {
 
         BST<Song> bst = new BST<>();
         readFile(new File(dataFileName), bst);
-        
+
         SearchEngine searchEngine = new SearchEngine(bst);
-        
+
         System.out.println("Welcome to the Sabrina Carpenter Database!\n");
 
         String choice = "";
@@ -30,7 +30,7 @@ public class TextUI {
             } else {
                 choice = input.nextLine().trim().toUpperCase();
             }
-            
+
             switch (choice) {
                 case "A" -> {
                     addSong(bst, input);
@@ -49,6 +49,11 @@ public class TextUI {
                 }
                 case "E" -> {
                     // Statistics
+                }
+                case "X" -> {
+                    System.out.println("What file do you wish to write this to?");
+                    String fileName = input.nextLine();
+                    writeFile(bst, fileName);
                 }
                 default -> {
                     System.out.println("\nInvalid menu option. Please enter A-F or X to exit.\n");

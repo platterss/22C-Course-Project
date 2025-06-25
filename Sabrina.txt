@@ -1,15 +1,89 @@
-Espresso,2:55,04/12/2024,Short n' Sweet,2278144
-Please Please Please,3:06,06/06/2024,Short n' Sweet,1450043
-Nonsense,2:43,07/15/2022,emails i can't send,1311793
-Taste,2:37,08/23/2024,Short n' Sweet,1058212
-Feather,3:05,03/17/2023,emails i can't send fwd:,911537
-On My Way,3:14,03/21/2019,Non-album single,790438
-Bed Chem,2:51,08/23/2024,Short n' Sweet,590675
-Juno,3:43,08/23/2024,Short n' Sweet,424250
-because i liked a boy,3:16,07/15/2022,emails i can't send,389731
-Looking at Me,3:01,06/07/2019,Singular: Act II,383059
-Thumbs,3:36,10/14/2016,Evolution,345717
-Good Graces,3:05,08/23/2024,Short n' Sweet,328224
-Sue Me,2:59,11/09/2018,Singular: Act I,271068
-Skin,2:57,01/22/2021,Non-album single,219211
-Busy Woman,2:17,02/14/2025,Short n' Sweet (Deluxe),198238
+because i liked a boy
+Album: emails i can't send
+Length: 03:16
+Release Date: 07/15/2022
+Plays (thousands): 389731
+
+Bed Chem
+Album: Short n' Sweet
+Length: 02:51
+Release Date: 08/23/2024
+Plays (thousands): 590675
+
+Busy Woman
+Album: Short n' Sweet (Deluxe)
+Length: 02:17
+Release Date: 02/14/2025
+Plays (thousands): 198238
+
+Espresso
+Album: Short n' Sweet
+Length: 02:55
+Release Date: 04/12/2024
+Plays (thousands): 2278144
+
+Feather
+Album: emails i can't send fwd:
+Length: 03:05
+Release Date: 03/17/2023
+Plays (thousands): 911537
+
+Good Graces
+Album: Short n' Sweet
+Length: 03:05
+Release Date: 08/23/2024
+Plays (thousands): 328224
+
+Juno
+Album: Short n' Sweet
+Length: 03:43
+Release Date: 08/23/2024
+Plays (thousands): 424250
+
+Looking at Me
+Album: Singular: Act II
+Length: 03:01
+Release Date: 06/07/2019
+Plays (thousands): 383059
+
+Nonsense
+Album: emails i can't send
+Length: 02:43
+Release Date: 07/15/2022
+Plays (thousands): 1311793
+
+On My Way
+Album: Non-album single
+Length: 03:14
+Release Date: 03/21/2019
+Plays (thousands): 790438
+
+Please Please Please
+Album: Short n' Sweet
+Length: 03:06
+Release Date: 06/06/2024
+Plays (thousands): 1450043
+
+Skin
+Album: Non-album single
+Length: 02:57
+Release Date: 01/22/2021
+Plays (thousands): 219211
+
+Sue Me
+Album: Singular: Act I
+Length: 02:59
+Release Date: 11/09/2018
+Plays (thousands): 271068
+
+Taste
+Album: Short n' Sweet
+Length: 02:37
+Release Date: 08/23/2024
+Plays (thousands): 1058212
+
+Thumbs
+Album: Evolution
+Length: 03:36
+Release Date: 10/14/2016
+Plays (thousands): 345717
