@@ -52,6 +52,7 @@ public class TextUI {
                 case "C" -> searchSong(input);
                 case "D" -> modifySong(input);
                 case "E" -> showStatistics();
+                case "F" -> displaySongs();
                 case "X" -> writeFile(input);
                 default -> System.out.println("\nInvalid menu option. Please enter A-E or X to exit.\n");
             }
@@ -129,6 +130,7 @@ public class TextUI {
         System.out.println("C: Search for a song");
         System.out.println("D: Update or modify a song entry");
         System.out.println("E: Show statistics");
+        System.out.println("F: Show all songs currently in the database");
         System.out.println("X: Quit program\n");
         System.out.print("Enter your choice: ");
     }
@@ -154,7 +156,7 @@ public class TextUI {
         String album = input.nextLine();
 
         System.out.print("Enter the number of plays: ");
-        int plays = Integer.parseInt(input.nextLine()) / 1000;
+        long plays = Long.parseLong(input.nextLine());
 
         System.out.print("Enter the lyrics in a single line: ");
         String lyrics = input.nextLine();
@@ -162,6 +164,9 @@ public class TextUI {
         Song song = new Song(songName, totalLength, releaseYear, album, plays, lyrics);
 
         songList.add(song);
+        songList.sort(new TitleComparator());
+        songBST.insert(song, new TitleComparator());
+        searchEngine.rebuild(songList);
         System.out.println("Song added successfully.");
     }
 
@@ -338,5 +343,17 @@ public class TextUI {
 
         System.out.println("Least played song:");
         System.out.println(sortedByPlays.findMin());
+    }
+
+    /**
+     * Displays all songs currently in the database
+     */
+    private static void displaySongs() {
+        System.out.println("All Songs in the Database:");
+        if (songList.isEmpty()) {
+            System.out.println("No songs available.");
+        } else {
+            System.out.println(songBST.inOrderString());
+        }
     }
 }
