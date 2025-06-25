@@ -172,7 +172,7 @@ public class Song {
         try {
             return LocalDate.parse(date, DATE_FORMATTER);
         } catch (Exception e) {
-            throw new IllegalArgumentException("parseReleaseDate(" + date +"): must be a valid date in MM/dd/yyyy.");
+            throw new IllegalArgumentException("parseReleaseDate(" + date + "): must be a valid date in MM/dd/yyyy.");
         }
     }
 
